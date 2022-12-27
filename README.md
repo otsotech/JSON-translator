@@ -6,7 +6,7 @@ A Python application for translating the strings in a JSON file to a different l
 - Uses machine translation for fast and accurate results
 - Easy to use
 
-##Getting Started
+## Getting Started
 To use the JSON Translator, you will need to have Python 3 installed on your machine. You will also need to install the required dependencies by running the following command:
 ```
 pip install -r requirements.txt
