@@ -11,7 +11,6 @@ def translate(text, target_language):
         "q": text,
         "langpair": f"en|{target_language}",
     }
-    print(f"Making request to {endpoint} with params {params}")
     response = requests.get(endpoint, params=params)
 
     # Parse the response
@@ -23,15 +22,16 @@ def translate(text, target_language):
 def translate_json(json_data, target_language):
     if isinstance(json_data, dict):
         for key, value in json_data.items():
-            print(f"Processing key {key} with value {value}")
+            print(f"Checking key {key} with value {value}")
             if isinstance(value, str):
-                print(f"Translating string {value}")
                 json_data[key] = translate(value, target_language)
+                print(f"Translated {value} to {json_data[key]}")
             else:
-                translate_json(value, target_language)
+                # Skip values that are not strings
+                print(f"Skipping non-string value for key {key}")
+                continue
     elif isinstance(json_data, list):
         for item in json_data:
-            print(f"Processing item {item}")
             translate_json(item, target_language)
 
 if __name__ == "__main__":
@@ -40,18 +40,14 @@ if __name__ == "__main__":
     parser.add_argument("-i", "--input", required=True, help="input JSON file")
     parser.add_argument("-l", "--language", required=True, help="target language")
     args = parser.parse_args()
-    print(f"Translating file {args.input} to language {args.language}")
 
     # Load the JSON file
     with open(args.input, "r") as f:
         json_data = json.load(f)
-    print(f"Loaded JSON data: {json_data}")
 
     # Translate the JSON data
     translate_json(json_data, args.language)
-    print(f"Translated JSON data: {json_data}")
 
     # Save the translated JSON data
     with open(args.input, "w") as f:
         json.dump(json_data, f, indent=2)
-    print("Saved translated JSON data to file")
