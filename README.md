@@ -18,7 +18,9 @@ python translate.py -i INPUT_FILE -l TARGET_LANGUAGE
 Replace INPUT_FILE with the path to the JSON file you want to translate, and TARGET_LANGUAGE with the desired target language (e.g. "fr" for French).
 
 ## Example
+```
 python translate.py -i data.json -l es
+```
 This command will translate the strings in the data.json file to Spanish.
 
 ## Contributing
