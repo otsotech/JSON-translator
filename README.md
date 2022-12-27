@@ -20,4 +20,4 @@ python translate.py -i data.json -l es
 This command will translate the strings in the data.json file to Spanish.
 
 ## Contributing
-We welcome contributions to the JSON Translator! If you have an idea for a new feature or a bug fix, please open an issue or submit a pull request.
+If you have an idea for a new feature or a bug fix, please open an issue or submit a pull request. Contributions to the JSON Translator are welcome and appreciated. Thank you for your interest in improving the tool!
