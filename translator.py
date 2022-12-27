@@ -24,7 +24,11 @@ def translate_json(json_data, target_language):
     if isinstance(json_data, dict):
         for key, value in json_data.items():
             print(f"Processing key {key} with value {value}")
-            if isinstance(value, str):
+            if isinstance(value, str) and len(value) > 1:
+                # Check if the string contains only a symbol
+                if not value.strip():
+                    print(f"Skipping string {value} because it contains only a symbol")
+                    continue
                 print(f"Translating string {value}")
                 json_data[key] = translate(value, target_language)
             else:
@@ -33,6 +37,10 @@ def translate_json(json_data, target_language):
         for item in json_data:
             print(f"Processing item {item}")
             translate_json(item, target_language)
+    else:
+        # Return immediately if the value is not a string, dict, or list
+        print(f"Skipping value {json_data} because it is not a string, dict, or list")
+        return
 
 if __name__ == "__main__":
     # Parse command line arguments
