@@ -69,13 +69,13 @@ if __name__ == "__main__":
     print(f"Translating file {args.input} to language {args.language}. Email: {args.email}\n")
 
     # Load the JSON file
-    with open(args.input, "r") as f:
+    with open(args.input, "r", encoding="utf-8") as f:
         json_data = json.load(f)
 
     # Translate the JSON data
     translate_json(json_data, args.language, args.email)
 
     # Save the translated JSON data
-    with open(args.input, "w") as f:
+    with open(args.input, "w", encoding="utf-8") as f:
         json.dump(json_data, f, indent=2)
     print("Saved translated JSON data to file.")
