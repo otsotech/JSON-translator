@@ -23,7 +23,13 @@ Replace `INPUT_FILE` with the path to the JSON file you want to translate, `TARG
 ```
 python main.py -i data.json -l es -e me@example.com
 ```
-This command will translate the strings in the data.json file to Spanish.
+This command will translate the strings in the `data.json` file to Spanish.
+
+By default, the JSON Translator saves the translated data to the same file as the input data. If you want to create a new file with the translated data, you can use the `-o` argument to specify the path to the new file.
+```
+python main.py -i data.json -o data2.json -l es -e me@example.com
+```
+This command will create a new `data2.json` file and save the translated data to it. The original `data.json` file will not be modified.
 
 ## Q&A
 **Q: Why do I need to provide an email address as a command line argument?**
