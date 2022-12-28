@@ -2,7 +2,7 @@ import argparse
 import json
 import requests
 
-def translate(text, target_language):
+def translate(text, target_language, email):
     # MyMemory Translation API endpoint
     endpoint = "http://api.mymemory.translated.net/get"
 
@@ -10,6 +10,7 @@ def translate(text, target_language):
     params = {
         "q": text,
         "langpair": f"en|{target_language}",
+        "de": email,
     }
     response = requests.get(endpoint, params=params)
 
@@ -19,7 +20,7 @@ def translate(text, target_language):
 
     return translated_text
 
-def translate_json(json_data, target_language, keys_processed=0, total_keys=None):
+def translate_json(json_data, target_language, email, keys_processed=0, total_keys=None):
     if total_keys is None:
         # Calculate total number of keys in the JSON data
         total_keys = 0
@@ -36,20 +37,20 @@ def translate_json(json_data, target_language, keys_processed=0, total_keys=None
     if isinstance(json_data, dict):
         for key, value in json_data.items():
             if isinstance(value, str) and len(value) > 1:
-                # Check if the string contains only a symbol
-                if not value.strip():
-                    print(f"Skipping '{value}' because it contains only a symbol.")
+                # Check if the string contains only a single letter or symbol or only numbers
+                if not value.strip() or len(value.strip()) == 1 or value.isdigit():
+                    print(f"Skipping '{value}' because it contains only a single letter or symbol or only numbers.")
                 else:
                     print(f"Translating '{value}'")
-                    json_data[key] = translate(value, target_language)
+                    json_data[key] = translate(value, target_language, email)
             else:
-                translate_json(value, target_language, keys_processed, total_keys)
+                translate_json(value, target_language, email, keys_processed, total_keys)
             keys_processed += 1
             percentage_complete = keys_processed / total_keys * 100
             print(f"{percentage_complete:.2f}% complete\n")
     elif isinstance(json_data, list):
         for item in json_data:
-            translate_json(item, target_language, keys_processed, total_keys)
+            translate_json(item, target_language, email, keys_processed, total_keys)
             keys_processed += 1
             percentage_complete = keys_processed / total_keys * 100
             print(f"{percentage_complete:.2f}% complete\n")
@@ -63,15 +64,16 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("-i", "--input", required=True, help="input JSON file")
     parser.add_argument("-l", "--language", required=True, help="target language")
+    parser.add_argument("-e", "--email", required=True, help="email address")
     args = parser.parse_args()
-    print(f"Translating file {args.input} to language {args.language} \n")
+    print(f"Translating file {args.input} to language {args.language}. Email: {args.email}\n")
 
     # Load the JSON file
     with open(args.input, "r") as f:
         json_data = json.load(f)
 
     # Translate the JSON data
-    translate_json(json_data, args.language)
+    translate_json(json_data, args.language, args.email)
 
     # Save the translated JSON data
     with open(args.input, "w") as f:
