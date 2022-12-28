@@ -24,7 +24,7 @@ python main.py -i data.json -l es -e me@example.com
 This command will translate the strings in the data.json file to Spanish.
 
 ## Q&A
-**Q: Why do I need to provide a valid email address as a command line argument?**
+**Q: Why do I need to provide an email address as a command line argument?**
 
 A: The MyMemory Translation API requires a valid email address to be included in the request as the `de` parameter. This is a requirement to use the API, and providing your email address allows you to access the API's full capabilities, including the ability to translate up to 50,000 characters per day.
 
