@@ -2,9 +2,11 @@
 a Python application for translating the strings in a JSON file to a different language.
 
 ## Features
-- Translate the strings in a JSON file to a specified target language
-- Uses machine translation for fast and accurate results
-- Easy to use
+- Recursively processes a JSON data structure and translates all string values that meet certain conditions
+- Uses the MyMemory Translation API to translate the string values from English to the specified target language
+- Skips string values that are not at least two characters long, do not contain a word, or contain only a single letter after being stripped of leading and trailing whitespace
+- Keeps track of the progress of the translation process and prints the percentage complete
+- Easy to use and customize to fit your translation needs
 
 ## Getting Started
 To use the JSON Translator, you will need to have Python 3 installed on your machine. You will also need to install the required dependencies by running the following command:
