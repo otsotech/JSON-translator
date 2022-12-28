@@ -13,15 +13,20 @@ pip install -r requirements.txt
 ```
 Once the dependencies are installed, you can use the tool by running the following command:
 ```
-python translator.py -i INPUT_FILE -l TARGET_LANGUAGE
+python translator.py -i INPUT_FILE -l TARGET_LANGUAGE -e EMAIL
 ```
-Replace INPUT_FILE with the path to the JSON file you want to translate, and TARGET_LANGUAGE with the desired target language (e.g. "fr" for French).
+Replace `INPUT_FILE` with the path to the JSON file you want to translate, `TARGET_LANGUAGE` with the desired target language, and `EMAIL` with your valid email address.
 
 ## Example
 ```
-python translator.py -i data.json -l es
+python translator.py -i data.json -l es -e example@gmail.com
 ```
 This command will translate the strings in the data.json file to Spanish.
+
+## Q&A
+**Q: Why do I need to provide a valid email address as a command line argument?**
+
+A: The MyMemory Translation API requires a valid email address to be included in the request as the `de` parameter. This is a requirement to use the API, and providing your email address allows you to access the API's full capabilities, including the ability to translate up to 50,000 characters per day.
 
 ## Contributing
 If you have an idea for a new feature or a bug fix, please open an issue or submit a pull request. Contributions to the JSON Translator are welcome and appreciated. Thank you for your interest in improving the tool!
