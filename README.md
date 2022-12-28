@@ -1,5 +1,5 @@
 # JSON Translator
-A Python application for translating the strings in a JSON file to a different language.
+a Python application for translating the strings in a JSON file to a different language.
 
 ## Features
 - Translate the strings in a JSON file to a specified target language
