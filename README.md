@@ -4,7 +4,7 @@ a Python application for translating the strings in a JSON file to a different l
 ## Features
 - Recursively processes a JSON data structure and translates all string values that meet certain conditions
 - Uses the MyMemory Translation API to translate the string values from English to the specified target language
-- Skips string values that are not at least two characters long, do not contain a word, or contain only a single letter after being stripped of leading and trailing whitespace
+- Skips string values that are not at least two characters long, do not contain a word, or contain only a single letter
 - Keeps track of the progress of the translation process and prints the percentage complete
 - Easy to use and customize to fit your translation needs
 
