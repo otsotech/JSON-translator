@@ -13,13 +13,13 @@ pip install -r requirements.txt
 ```
 Once the dependencies are installed, you can use the tool by running the following command:
 ```
-python translator.py -i INPUT_FILE -l TARGET_LANGUAGE -e EMAIL
+python main.py -i INPUT_FILE -l TARGET_LANGUAGE -e EMAIL
 ```
 Replace `INPUT_FILE` with the path to the JSON file you want to translate, `TARGET_LANGUAGE` with the desired target language, and `EMAIL` with your valid email address.
 
 ## Example
 ```
-python translator.py -i data.json -l es -e example@gmail.com
+python main.py -i data.json -l es -e me@example.com
 ```
 This command will translate the strings in the data.json file to Spanish.
 
