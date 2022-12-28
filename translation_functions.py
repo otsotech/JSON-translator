@@ -1,5 +1,9 @@
-import requests
 import re
+import requests
+import logging
+
+class TranslationError(Exception):
+    pass
 
 def translate(text, target_language, email):
     endpoint = "http://api.mymemory.translated.net/get"
@@ -37,38 +41,38 @@ def translate_json(json_data, target_language, email, keys_processed=0, total_ke
         for key, value in json_data.items():
             if isinstance(value, str) and len(value) > 1:
                 if not re.search(r'\b[a-zA-Z]+\b', value):
-                    print("Skipping '{}' because it does not contain a word.".format(value))
+                    logging.info("Skipping '{}' because it does not contain a word.".format(value))
                 elif len(value.strip()) == 1:
-                    print("Skipping '{}' because it contains only a single letter.".format(value))
+                    logging.info("Skipping '{}' because it contains only a single letter.".format(value))
                 else:
-                    print("Translating '{}'".format(value))
+                    logging.info("Translating '{}'".format(value))
                     try:
                         json_data[key] = translate(value, target_language, email)
                     except TranslationError as e:
-                        print("Error occurred while translating '{}': {}".format(value, e))
+                        logging.error("Error occurred while translating '{}': {}".format(value, e))
             else:
                 translate_json(value, target_language, email, keys_processed, total_keys)
             keys_processed += 1
             percentage_complete = keys_processed / total_keys * 100
-            print("    {:.2f}% complete\n".format(percentage_complete))
+            logging.info("    {:.2f}% complete\n".format(percentage_complete))
     elif isinstance(json_data, list):
         for i, item in enumerate(json_data):
             if isinstance(item, str) and len(item) > 1:
                 if not re.search(r'\b[a-zA-Z]+\b', item):
-                    print("Skipping '{}' because it does not contain a word.".format(item))
+                    logging.info("Skipping '{}' because it does not contain a word.".format(item))
                 elif len(item.strip()) == 1:
-                    print("Skipping '{}' because it contains only a single letter.".format(item))
+                    logging.info("Skipping '{}' because it contains only a single letter.".format(item))
                 else:
-                    print("Translating '{}'\n".format(item))
+                    logging.info("Translating '{}'\n".format(item))
                     try:
                         json_data[i] = translate(item, target_language, email)
                     except TranslationError as e:
-                        print("Error occurred while translating '{}': {}".format(item, e))
+                        logging.error("Error occurred while translating '{}': {}".format(item, e))
             else:
                 translate_json(item, target_language, email, keys_processed, total_keys)
             keys_processed += 1
             percentage_complete = keys_processed / total_keys * 100
-            print("    {:.2f}% complete".format(percentage_complete))
+            logging.info("    {:.2f}% complete".format(percentage_complete))
     return json_data
 
 def count_keys(data):
@@ -87,14 +91,9 @@ def count_keys(data):
     return total_keys
 
 def traverse(data):
-    if isinstance(data, dict):
-        for key, value in data.items():
-            yield value
-            yield from traverse(value)
-    elif isinstance(data, list):
-        for item in data:
-            yield item
-            yield from traverse(item)
-
-class TranslationError(Exception):
-    pass
+    if isinstance(data, (dict, list)):
+        for key, value in data.items() if isinstance(data, dict) else enumerate(data):
+            if isinstance(value, (dict, list)):
+                yield from traverse(value)
+            else:
+                yield value
