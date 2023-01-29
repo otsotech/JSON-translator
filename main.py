@@ -2,6 +2,7 @@ import argparse
 import json
 import logging
 import sys
+import requests
 
 from translation_functions import translate, translate_json, TranslationError
 
